@@ -1,0 +1,119 @@
+server:
+  port: 8088
+
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://localhost:8080/realms/my_realm
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: my_client
+            client-secret: HKFKYP7kb8OMldAgfvnk27FhRPOv8Y7H
+            authorization-grant-type: password
+            scope: openid
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/my_realm/protocol/openid-connect/certs
+  cloud:
+    gateway:
+      routes:
+        - id: product
+          uri: http://localhost:8085
+          predicates:
+            - Path=/product/**,/products/**,/goods/**
+        - id: order
+          uri: http://localhost:8081
+          predicates:
+            - Path=/orders/**
+        - id: delivery
+          uri: http://localhost:8082
+          predicates:
+            - Path=/deliveries/**
+        - id: auth
+          uri: http://localhost:8080
+          predicates:
+            - Path=/oauth/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://oauth:8080/realms/my_realm
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: my_client
+            client-secret: HKFKYP7kb8OMldAgfvnk27FhRPOv8Y7H
+            authorization-grant-type: password
+            redirect-uri: http://gateway:8088
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://oauth:8080/realms/my_realm/protocol/openid-connect/certs
+  cloud:
+    gateway:
+      routes:
+        - id: product
+          uri: http://products:8080
+          predicates:
+            - Path=/product/**,/products/**,/goods/**
+        - id: order
+          uri: http://orders:8080
+          predicates:
+            - Path=/orders/**
+        - id: delivery
+          uri: http://delivery:8080
+          predicates:
+            - Path=/deliveries/**
+        - id: servicecenter
+          uri: http://servicecenter:8080
+          predicates:
+            - Path=/surveys/**
+        - id: mypage
+          uri: http://mypage:8080
+          predicates:
+            - Path=/users/**,/mypage/**
+        - id: auth
+          uri: http://oauth:8080
+          predicates:
+            - Path=/oauth/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
