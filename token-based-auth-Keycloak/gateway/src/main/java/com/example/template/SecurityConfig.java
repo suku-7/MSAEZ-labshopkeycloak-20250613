@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
                 .pathMatchers("/test/permitAll", "/products/**", "/login/**").permitAll()
                 .pathMatchers("/orders/**").authenticated()                 // Check Keycloak RBAC
                 .pathMatchers("/test/user").hasAuthority("ROLE_USER")       // Check Keycloak RBAC
-                .pathMatchers("/test/admin").hasAuthority("ADMIN")          // Check Keycloak RBAC
+                .pathMatchers("/test/admin").hasAuthority("ROLE_ADMIN")          // Check Keycloak RBAC
                 .pathMatchers("/test/authenticated").authenticated()        // Check Keycloak RBAC
                 .anyExchange().authenticated()
                 .and()
