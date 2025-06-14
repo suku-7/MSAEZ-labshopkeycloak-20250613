@@ -1,9 +1,8 @@
 # Model
-## MSAEZ-labshopkeycloak-20250613 (주문 데이터 실시간 동기화 확인-CDC)
-
-Keycloak 서버와 인증이 필요한 두 개의 서비스(Gateway, Order)를 구동했습니다.
-이후 사용자 역할에 따라 JWT 토큰을 발급받아 각 리소스에 대한 접근 권한이 올바르게 작동하는지 테스트하고 검증했습니다.
-최종적으로는 사용자 및 관리자 권한별 접근 제어의 성공적인 구현을 확인했습니다.
+## MSAEZ-labshopkeycloak-20250613
+Keycloak 서버와 인증이 필요한 두 개의 서비스(Gateway, Order)를 구동했습니다.  
+이후 사용자 역할에 따라 JWT 토큰을 발급받아 각 리소스에 대한 접근 권한이 올바르게 작동하는지 테스트하고 검증했습니다.  
+최종적으로는 사용자 및 관리자 권한별 접근 제어의 성공적인 구현을 확인했습니다.  
 
 ![스크린샷 2025-06-13 101457](https://github.com/user-attachments/assets/bc5e4ece-bc94-43bf-855b-7be471edc8ef)
 ![스크린샷 2025-06-13 102008](https://github.com/user-attachments/assets/7f554169-8352-439f-93fd-825bb5169037)
